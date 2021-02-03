@@ -5,7 +5,7 @@ const campsiteRouter = express.Router();
 
 campsiteRouter.use(bodyParser.json());
 
-campsiteRouter.route('/:campsiteId')
+campsiteRouter.route('/')
 .all((req, res, next) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
@@ -26,7 +26,7 @@ campsiteRouter.route('/:campsiteId')
 });
 //localhost:3000/campsites
 
-campsiteRouter.route('/campsiteId')
+campsiteRouter.route('/:campsiteId')
 .all((req, res, next) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
@@ -40,7 +40,7 @@ campsiteRouter.route('/campsiteId')
     res.end(`POST operation not supported on /campsites/ ${req.params.campsiteId}`);
 })
 .put((req, res) => {
-    res.write(`Updating the campsite: ${req.params.campsiteId}`);
+    res.write(`Updating the campsite: ${req.params.campsiteId} \n`);
     res.end(`Will update the campsite: ${req.body.name} with description
          ${req.body.description}`);
 })
