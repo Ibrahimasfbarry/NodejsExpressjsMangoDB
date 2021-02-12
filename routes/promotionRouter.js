@@ -1,8 +1,10 @@
 const express = require('express');
 const Promotion = require('../models/promotion');
 const bodyParser = require('body-parser');
+const authenticate = require('../authenticate');
+
 const promotionRouter = express.Router();
-promotionRouter.use(bodyParser.json());
+//promotionRouter.use(bodyParser.json());
 promotionRouter.route('/')
 .get((req, res, next) => {
     Promotion.find()

@@ -1,5 +1,6 @@
 const express = require('express');
 const Partner = require('../models/partner');
+const authenticate = require('../authenticate');
 //const bodyParser = require('body-parser');
 const partnerRouter = express.Router();
 //partnerRouter.use(bodyParser.json());
@@ -18,7 +19,7 @@ partnerRouter.route('/')
 .post(authenticate.verifyUser, (req, res, next) => {
     Partner.create(req.body)
     .then(partner => {
-        console.log('Campsite Created ', partner);
+        console.log('Partner Created ', partner);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(partner);
@@ -38,6 +39,7 @@ partnerRouter.route('/')
     })
     .catch(err => next(err));
 });
+
 partnerRouter.route('/:partnerId')
 .get((req, res, next) => {
     Partner.findById(req.params.partnerId)
