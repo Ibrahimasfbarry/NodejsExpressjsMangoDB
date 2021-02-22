@@ -83,14 +83,15 @@ favoriteRouter.route('/')
 
 
 favoriteRouter.route('/:campsiteId')
-.options(cors.corsWithOptions, (req, res) => {res.sendStatus(200)})
+.options(cors.corsWithOptions, (req, res) => {
+    res.sendStatus(200)})
 .get(cors.cors, authenticate.verifyUser ,(req, res, next) => {
     res.statusCode = 403;
     res.end(`GET operation not supported on /favorites/ ${req.params.campsiteId}`);
     
     
 })
-// need to be done
+
 .post(cors.corsWithOptions, authenticate.verifyUser, (req, res) => {
 Favorite.findOne({user: req.user._id})
 .then(favorite => {
@@ -110,7 +111,7 @@ Favorite.findOne({user: req.user._id})
             res.end('That campsite is already a favorite!');
         }
     }else{ 
-        favorite.create({ user: req.user._id, campsites:[req.params.campsiteId]})
+        Favorite.create({ user: req.user._id, campsites:[req.params.campsiteId]})
         .then(favorite => {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'applicatrion/json');
@@ -135,7 +136,7 @@ Favorite.findOne({user: req.user._id})
              favorite.campsites.splice(index, 1);
          }
          favorite.save()
-         .then(Favorite => {
+         .then(favorite => {
              Favorite.findById(favorite._id)
              .then(favorite =>{
                 console.log('Favorite Campsite Delete!', favorite);
@@ -153,7 +154,5 @@ Favorite.findOne({user: req.user._id})
  }).catch(err => next(err))  
     
 });
-
-
 
 module.exports= favoriteRouter;
